@@ -1,25 +1,29 @@
-package com.example;
+package com.zoology;
 
 import java.util.List;
+import java.util.Arrays;
 
-public class Feline extends Animal implements Predator {
+public class Feline {
 
-    @Override
-    public List<String> eatMeat() throws Exception {
-        return getFood("Хищник");
-    }
-
-    @Override
     public String getFamily() {
         return "Кошачьи";
     }
 
+    public List<String> getFood(String animalKind) throws Exception {
+        if (animalKind.equals("Хищник")) {
+            return List.of("Животные", "Птицы", "Рыба");
+        } else if (animalKind.equals("Травоядное")) {
+            return List.of("Трава", "Листья", "Фрукты");
+        } else {
+            throw new Exception("Некорректный тип животного");
+        }
+    }
+
     public int getKittens() {
-        return getKittens(1);
+        return 1;
     }
 
     public int getKittens(int kittensCount) {
         return kittensCount;
     }
-
 }
