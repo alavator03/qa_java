@@ -49,15 +49,24 @@ class LionTest {
         assertDoesNotThrow(() -> new Lion(sex, mockFeline));
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {"Мужской", "Женский", "s", "", "   ", "Male", "Female"})
-    void constructorWithInvalidSexShouldThrowException(String invalidSex) {
+    @Test
+    void constructorWithInvalidSexShouldThrowException() {
         // Act & Assert
-        Exception exception = assertThrows(Exception.class, () -> {
-            new Lion(invalidSex, mockFeline);
-        });
+        assertThrows(Exception.class, () -> new Lion("Мужской", mockFeline));
+    }
 
+    @Test
+    void constructorWithInvalidSexShouldThrowExceptionWithCorrectMessage() {
+        // Act & Assert
+        Exception exception = assertThrows(Exception.class, () -> new Lion("Мужской", mockFeline));
         assertEquals("Используйте допустимые значения пола: Самец или Самка", exception.getMessage());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"Женский", "s", "", "   ", "Male", "Female"})
+    void constructorWithVariousInvalidSexShouldThrowException(String invalidSex) {
+        // Act & Assert
+        assertThrows(Exception.class, () -> new Lion(invalidSex, mockFeline));
     }
 
     // Тесты getFamily
@@ -71,12 +80,20 @@ class LionTest {
 
         // Assert
         assertEquals("Кошачьи", family);
+    }
+
+    @Test
+    void getFamilyShouldCallFelineGetFamily() {
+        // Act
+        lionMale.getFamily();
+
+        // Assert
         verify(mockFeline, times(1)).getFamily();
     }
 
     // Тесты getFood
     @Test
-    void getFoodShouldCallFelineGetFoodWithPredator() throws Exception {
+    void getFoodShouldReturnFoodFromFeline() throws Exception {
         // Arrange
         List<String> expectedFood = List.of("Животные", "Птицы", "Рыба");
         when(mockFeline.getFood("Хищник")).thenReturn(expectedFood);
@@ -86,6 +103,14 @@ class LionTest {
 
         // Assert
         assertEquals(expectedFood, actualFood);
+    }
+
+    @Test
+    void getFoodShouldCallFelineGetFoodWithPredator() throws Exception {
+        // Act
+        lionMale.getFood();
+
+        // Assert
         verify(mockFeline, times(1)).getFood("Хищник");
     }
 
@@ -95,17 +120,34 @@ class LionTest {
         when(mockFeline.getFood("Хищник")).thenThrow(new Exception("Ошибка в Feline"));
 
         // Act & Assert
-        Exception exception = assertThrows(Exception.class, () -> {
-            lionMale.getFood();
-        });
+        assertThrows(Exception.class, () -> lionMale.getFood());
+    }
 
+    @Test
+    void getFoodWhenFelineThrowsExceptionShouldHaveCorrectMessage() throws Exception {
+        // Arrange
+        when(mockFeline.getFood("Хищник")).thenThrow(new Exception("Ошибка в Feline"));
+
+        // Act & Assert
+        Exception exception = assertThrows(Exception.class, () -> lionMale.getFood());
         assertEquals("Ошибка в Feline", exception.getMessage());
+    }
+
+    @Test
+    void getFoodWhenFelineThrowsExceptionShouldVerifyCall() throws Exception {
+        // Arrange
+        when(mockFeline.getFood("Хищник")).thenThrow(new Exception("Ошибка в Feline"));
+
+        // Act
+        assertThrows(Exception.class, () -> lionMale.getFood());
+
+        // Assert
         verify(mockFeline, times(1)).getFood("Хищник");
     }
 
     // Тесты getKittens
     @Test
-    void getKittensShouldCallFelineGetKittens() {
+    void getKittensShouldReturnValueFromFeline() {
         // Arrange
         when(mockFeline.getKittens()).thenReturn(2);
 
@@ -114,6 +156,14 @@ class LionTest {
 
         // Assert
         assertEquals(2, kittens);
+    }
+
+    @Test
+    void getKittensShouldCallFelineGetKittens() {
+        // Act
+        lionMale.getKittens();
+
+        // Assert
         verify(mockFeline, times(1)).getKittens();
     }
 
@@ -136,20 +186,28 @@ class LionTest {
         assertEquals("Самка", sex);
     }
 
-    // Параметризованный тест для doesHaveMane
-    @ParameterizedTest
-    @CsvSource({
-            "Самец, true",
-            "Самка, false"
-    })
-    void doesHaveManeShouldReturnTrueForMaleFalseForFemale(String sex, boolean expected) throws Exception {
+    // Тесты для doesHaveMane
+    @Test
+    void doesHaveManeForMaleLionShouldReturnTrue() throws Exception {
         // Arrange
-        Lion lion = new Lion(sex, mockFeline);
+        Lion lion = new Lion("Самец", mockFeline);
 
         // Act
         boolean hasMane = lion.doesHaveMane();
 
         // Assert
-        assertEquals(expected, hasMane);
+        assertTrue(hasMane);
+    }
+
+    @Test
+    void doesHaveManeForFemaleLionShouldReturnFalse() throws Exception {
+        // Arrange
+        Lion lion = new Lion("Самка", mockFeline);
+
+        // Act
+        boolean hasMane = lion.doesHaveMane();
+
+        // Assert
+        assertFalse(hasMane);
     }
 }

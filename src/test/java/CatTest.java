@@ -42,8 +42,20 @@ class CatTest {
         // Act
         List<String> actualFood = cat.getFood();
 
-        // Assert
+        // Assert - проверяем только результат
         assertEquals(expectedFood, actualFood);
+    }
+
+    @Test
+    void getFoodShouldVerifyCallToFeline() throws Exception {
+        // Arrange
+        List<String> expectedFood = List.of("Животные", "Птицы", "Рыба");
+        when(mockFeline.getFood("Хищник")).thenReturn(expectedFood);
+
+        // Act
+        cat.getFood();
+
+        // Assert - проверяем только вызов метода
         verify(mockFeline, times(1)).getFood("Хищник");
     }
 
@@ -58,19 +70,43 @@ class CatTest {
         });
 
         assertEquals("Ошибка в Feline", exception.getMessage());
+    }
+
+    @Test
+    void getFoodWhenFelineThrowsExceptionShouldVerifyCall() throws Exception {
+        // Arrange
+        when(mockFeline.getFood("Хищник")).thenThrow(new Exception("Ошибка в Feline"));
+
+        // Act
+        assertThrows(Exception.class, () -> {
+            cat.getFood();
+        });
+
+        // Assert
         verify(mockFeline, times(1)).getFood("Хищник");
     }
 
     @Test
-    void getKittensShouldCallFelineGetKittens() {
+    void getKittensShouldReturnValueFromFeline() {
         // Arrange
         when(mockFeline.getKittens()).thenReturn(3);
 
         // Act
         int kittens = cat.getKittens();
 
-        // Assert
+        // Assert - проверяем только результат
         assertEquals(3, kittens);
+    }
+
+    @Test
+    void getKittensShouldVerifyCallToFeline() {
+        // Arrange
+        when(mockFeline.getKittens()).thenReturn(3);
+
+        // Act
+        cat.getKittens();
+
+        // Assert - проверяем только вызов метода
         verify(mockFeline, times(1)).getKittens();
     }
 }

@@ -45,10 +45,13 @@ class FelineTest {
     @Test
     void getFoodWithInvalidKindShouldThrowException() {
         // Act & Assert
-        Exception exception = assertThrows(Exception.class, () -> {
-            feline.getFood("Неизвестное");
-        });
+        assertThrows(Exception.class, () -> feline.getFood("Неизвестное"));
+    }
 
+    @Test
+    void getFoodWithInvalidKindShouldThrowExceptionWithCorrectMessage() {
+        // Act & Assert
+        Exception exception = assertThrows(Exception.class, () -> feline.getFood("Неизвестное"));
         assertEquals("Некорректный тип животного", exception.getMessage());
     }
 

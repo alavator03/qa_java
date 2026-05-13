@@ -59,7 +59,7 @@ class AlexTest {
     }
 
     @Test
-    void getFamilyShouldInheritFromLion() {
+    void getFamilyShouldReturnFamilyFromFeline() {
         // Arrange
         when(mockFeline.getFamily()).thenReturn("Кошачьи");
 
@@ -68,11 +68,19 @@ class AlexTest {
 
         // Assert
         assertEquals("Кошачьи", family);
+    }
+
+    @Test
+    void getFamilyShouldCallFelineGetFamily() {
+        // Act
+        alex.getFamily();
+
+        // Assert
         verify(mockFeline, times(1)).getFamily();
     }
 
     @Test
-    void getFoodShouldInheritFromLion() throws Exception {
+    void getFoodShouldReturnFoodFromFeline() throws Exception {
         // Arrange
         List<String> expectedFood = List.of("Животные", "Птицы", "Рыба");
         when(mockFeline.getFood("Хищник")).thenReturn(expectedFood);
@@ -82,6 +90,14 @@ class AlexTest {
 
         // Assert
         assertEquals(expectedFood, actualFood);
+    }
+
+    @Test
+    void getFoodShouldCallFelineGetFoodWithPredator() throws Exception {
+        // Act
+        alex.getFood();
+
+        // Assert
         verify(mockFeline, times(1)).getFood("Хищник");
     }
 
