@@ -25,7 +25,7 @@ class CatTest {
     }
 
     @Test
-    void getSound_ShouldReturnMeow() {
+    void getSoundShouldReturnMeow() {
         // Act
         String sound = cat.getSound();
 
@@ -34,7 +34,7 @@ class CatTest {
     }
 
     @Test
-    void getFood_ShouldCallFelineGetFoodWithPredator() throws Exception {
+    void getFoodShouldCallFelineGetFoodWithPredator() throws Exception {
         // Arrange
         List<String> expectedFood = List.of("Животные", "Птицы", "Рыба");
         when(mockFeline.getFood("Хищник")).thenReturn(expectedFood);
@@ -48,7 +48,7 @@ class CatTest {
     }
 
     @Test
-    void getFood_WhenFelineThrowsException_ShouldPropagateException() throws Exception {
+    void getFoodWhenFelineThrowsExceptionShouldPropagateException() throws Exception {
         // Arrange
         when(mockFeline.getFood("Хищник")).thenThrow(new Exception("Ошибка в Feline"));
 
@@ -62,7 +62,7 @@ class CatTest {
     }
 
     @Test
-    void getKittens_ShouldCallFelineGetKittens() {
+    void getKittensShouldCallFelineGetKittens() {
         // Arrange
         when(mockFeline.getKittens()).thenReturn(3);
 

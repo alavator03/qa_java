@@ -25,27 +25,23 @@ class AlexTest {
     }
 
     @Test
-    void constructor_ShouldCreateAlexWithMaleSex() {
+    void constructorShouldCreateAlexWithMaleSex() {
         // Assert
         assertEquals("Самец", alex.getSex());
     }
 
     @Test
-    void getFriends_ShouldReturnCorrectFriendsList() {
+    void getFriendsShouldReturnCorrectFriendsList() {
         // Act
         List<String> friends = alex.getFriends();
 
         // Assert
         List<String> expectedFriends = List.of("Марти", "Глория", "Мелман");
         assertEquals(expectedFriends, friends);
-        assertEquals(3, friends.size());
-        assertTrue(friends.contains("Марти"));
-        assertTrue(friends.contains("Глория"));
-        assertTrue(friends.contains("Мелман"));
     }
 
     @Test
-    void getPlaceOfLiving_ShouldReturnNewYorkZoo() {
+    void getPlaceOfLivingShouldReturnNewYorkZoo() {
         // Act
         String placeOfLiving = alex.getPlaceOfLiving();
 
@@ -54,7 +50,7 @@ class AlexTest {
     }
 
     @Test
-    void getKittens_Override_ShouldReturnZero() {
+    void getKittensOverrideShouldReturnZero() {
         // Act
         int kittens = alex.getKittens();
 
@@ -63,7 +59,7 @@ class AlexTest {
     }
 
     @Test
-    void getFamily_ShouldInheritFromLion() {
+    void getFamilyShouldInheritFromLion() {
         // Arrange
         when(mockFeline.getFamily()).thenReturn("Кошачьи");
 
@@ -76,7 +72,7 @@ class AlexTest {
     }
 
     @Test
-    void getFood_ShouldInheritFromLion() throws Exception {
+    void getFoodShouldInheritFromLion() throws Exception {
         // Arrange
         List<String> expectedFood = List.of("Животные", "Птицы", "Рыба");
         when(mockFeline.getFood("Хищник")).thenReturn(expectedFood);
@@ -90,7 +86,7 @@ class AlexTest {
     }
 
     @Test
-    void doesHaveMane_ShouldReturnTrueForAlex() {
+    void doesHaveManeShouldReturnTrueForAlex() {
         // Act
         boolean hasMane = alex.doesHaveMane();
 
@@ -99,7 +95,7 @@ class AlexTest {
     }
 
     @Test
-    void getSex_ShouldReturnMaleForAlex() {
+    void getSexShouldReturnMaleForAlex() {
         // Act
         String sex = alex.getSex();
 

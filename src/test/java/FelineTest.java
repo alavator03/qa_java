@@ -20,7 +20,7 @@ class FelineTest {
     }
 
     @Test
-    void getFamily_ShouldReturnCorrectFamily() {
+    void getFamilyShouldReturnCorrectFamily() {
         // Act
         String family = feline.getFamily();
 
@@ -33,7 +33,7 @@ class FelineTest {
             "Хищник, Животные;Птицы;Рыба",
             "Травоядное, Трава;Листья;Фрукты"
     })
-    void getFood_WithValidAnimalKind_ShouldReturnCorrectFood(String animalKind, String expectedFoodList) throws Exception {
+    void getFoodWithValidAnimalKindShouldReturnCorrectFood(String animalKind, String expectedFoodList) throws Exception {
         // Act
         List<String> food = feline.getFood(animalKind);
         List<String> expected = List.of(expectedFoodList.split(";"));
@@ -43,7 +43,7 @@ class FelineTest {
     }
 
     @Test
-    void getFood_WithInvalidKind_ShouldThrowException() {
+    void getFoodWithInvalidKindShouldThrowException() {
         // Act & Assert
         Exception exception = assertThrows(Exception.class, () -> {
             feline.getFood("Неизвестное");
@@ -53,7 +53,7 @@ class FelineTest {
     }
 
     @Test
-    void getKittens_WithoutArguments_ShouldReturnOne() {
+    void getKittensWithoutArgumentsShouldReturnOne() {
         // Act
         int kittens = feline.getKittens();
 
@@ -63,7 +63,7 @@ class FelineTest {
 
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 2, 3, 5, 10})
-    void getKittens_WithArgument_ShouldReturnSpecifiedCount(int kittensCount) {
+    void getKittensWithArgumentShouldReturnSpecifiedCount(int kittensCount) {
         // Act
         int kittens = feline.getKittens(kittensCount);
 

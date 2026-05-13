@@ -31,27 +31,27 @@ class LionTest {
 
     // Тесты конструктора
     @Test
-    void constructor_WithMaleSex_ShouldCreateLion() throws Exception {
+    void constructorWithMaleSexShouldCreateLion() throws Exception {
         // Act & Assert
         assertDoesNotThrow(() -> new Lion("Самец", mockFeline));
     }
 
     @Test
-    void constructor_WithFemaleSex_ShouldCreateLion() throws Exception {
+    void constructorWithFemaleSexShouldCreateLion() throws Exception {
         // Act & Assert
         assertDoesNotThrow(() -> new Lion("Самка", mockFeline));
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"Самец", "Самка"})
-    void constructor_WithValidSex_ShouldNotThrowException(String sex) {
+    void constructorWithValidSexShouldNotThrowException(String sex) {
         // Act & Assert
         assertDoesNotThrow(() -> new Lion(sex, mockFeline));
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"Мужской", "Женский", "s", "", "   ", "Male", "Female"})
-    void constructor_WithInvalidSex_ShouldThrowException(String invalidSex) {
+    void constructorWithInvalidSexShouldThrowException(String invalidSex) {
         // Act & Assert
         Exception exception = assertThrows(Exception.class, () -> {
             new Lion(invalidSex, mockFeline);
@@ -62,7 +62,7 @@ class LionTest {
 
     // Тесты getFamily
     @Test
-    void getFamily_ShouldReturnFamilyFromFeline() {
+    void getFamilyShouldReturnFamilyFromFeline() {
         // Arrange
         when(mockFeline.getFamily()).thenReturn("Кошачьи");
 
@@ -76,7 +76,7 @@ class LionTest {
 
     // Тесты getFood
     @Test
-    void getFood_ShouldCallFelineGetFoodWithPredator() throws Exception {
+    void getFoodShouldCallFelineGetFoodWithPredator() throws Exception {
         // Arrange
         List<String> expectedFood = List.of("Животные", "Птицы", "Рыба");
         when(mockFeline.getFood("Хищник")).thenReturn(expectedFood);
@@ -90,7 +90,7 @@ class LionTest {
     }
 
     @Test
-    void getFood_WhenFelineThrowsException_ShouldPropagateException() throws Exception {
+    void getFoodWhenFelineThrowsExceptionShouldPropagateException() throws Exception {
         // Arrange
         when(mockFeline.getFood("Хищник")).thenThrow(new Exception("Ошибка в Feline"));
 
@@ -105,7 +105,7 @@ class LionTest {
 
     // Тесты getKittens
     @Test
-    void getKittens_ShouldCallFelineGetKittens() {
+    void getKittensShouldCallFelineGetKittens() {
         // Arrange
         when(mockFeline.getKittens()).thenReturn(2);
 
@@ -119,7 +119,7 @@ class LionTest {
 
     // Тесты getSex
     @Test
-    void getSex_ForMaleLion_ShouldReturnMale() {
+    void getSexForMaleLionShouldReturnMale() {
         // Act
         String sex = lionMale.getSex();
 
@@ -128,7 +128,7 @@ class LionTest {
     }
 
     @Test
-    void getSex_ForFemaleLion_ShouldReturnFemale() {
+    void getSexForFemaleLionShouldReturnFemale() {
         // Act
         String sex = lionFemale.getSex();
 
@@ -142,7 +142,7 @@ class LionTest {
             "Самец, true",
             "Самка, false"
     })
-    void doesHaveMane_ShouldReturnTrueForMaleFalseForFemale(String sex, boolean expected) throws Exception {
+    void doesHaveManeShouldReturnTrueForMaleFalseForFemale(String sex, boolean expected) throws Exception {
         // Arrange
         Lion lion = new Lion(sex, mockFeline);
 
